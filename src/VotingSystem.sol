@@ -39,7 +39,7 @@ contract VotingSystem is AccessControl, Pausable, ReentrancyGuard {
 
     StakingVault public immutable stakingVault;
     VoteResultNFT public immutable nft;
-    address public nftRecipient;
+    address public immutable nftRecipient;
 
     constructor(address vault, address nftAddress, address admin) {
         stakingVault = StakingVault(vault);

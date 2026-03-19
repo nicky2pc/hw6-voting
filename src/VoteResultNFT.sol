@@ -42,7 +42,7 @@ contract VoteResultNFT is ERC721, AccessControl {
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        if (results[tokenId].finalizedAt == 0) revert TokenDoesNotExist(tokenId);
+        if (_ownerOf(tokenId) == address(0)) revert TokenDoesNotExist(tokenId);
         VoteResult memory r = results[tokenId];
         string memory json = string.concat(
             '{"name":"Vote Result #', Strings.toString(tokenId),

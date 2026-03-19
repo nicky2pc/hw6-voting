@@ -9,6 +9,7 @@ contract StakingVault is AccessControl, Pausable, ReentrancyGuard {
     error InvalidDuration(uint8 provided);
     error StakeNotExpired(uint256 stakeIndex, uint256 expiresAt);
     error StakeAlreadyWithdrawn(uint256 stakeIndex);
+    error ZeroAmount();
 
     event Staked(address indexed user, uint256 indexed stakeIndex, uint256 amount, uint8 durationWeeks, uint256 expiresAt);
     event Unstaked(address indexed user, uint256 indexed stakeIndex, uint256 amount);
@@ -32,7 +33,7 @@ contract StakingVault is AccessControl, Pausable, ReentrancyGuard {
 
     function stake(uint256 amount, uint8 durationWeeks) external whenNotPaused nonReentrant {
         if (durationWeeks < 1 || durationWeeks > 4) revert InvalidDuration(durationWeeks);
-        require(amount > 0, "amount = 0");
+        if (amount == 0) revert ZeroAmount();
         token.transferFrom(msg.sender, address(this), amount);
         uint256 expiresAt = block.timestamp + uint256(durationWeeks) * 1 weeks;
         uint256 idx = stakes[msg.sender].length;
