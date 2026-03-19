@@ -1,5 +1,7 @@
 # HW6 — Vega Voting System
 
+![Architecture](exc.jpg)
+
 4 контракта: ERC20 токен VV, стейкинг с VP формулой, голосование с auto-finalization, ERC721 NFT с результатами.
 
 **VP = weeksRemaining² × (amount / 1e18)**
